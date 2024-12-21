@@ -1,0 +1,10 @@
+/* Hero Section Styles */
+#hero {
+  width: 100%;
+  height: 100vh;
+  background: url('back.jpg') center center no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
