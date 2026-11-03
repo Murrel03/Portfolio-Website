@@ -1,507 +1,426 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Murrel Miranda | Full Stack / Backend Developer</title>
+<meta content="Portfolio of Murrel Miranda — Full Stack / Backend Developer, MS in Information Systems at UT Arlington. React, Node.js, Python, SQL, MongoDB." name="description">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08080f; --bg2:#0e0e1a; --card:rgba(255,255,255,.04); --card-border:rgba(255,255,255,.09);
+  --text:#f4f2ff; --muted:#a7a3c2; --violet:#7c3aed; --fuchsia:#d946ef; --pink:#f472b6; --amber:#fbbf24;
+  --grad:linear-gradient(92deg,#a78bfa,#e879f9 55%,#fbbf24);
+  --radius:20px; --maxw:1140px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.65;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-2;background:
+  radial-gradient(600px 400px at 12% -5%,rgba(124,58,237,.35),transparent 60%),
+  radial-gradient(700px 500px at 95% 10%,rgba(217,70,239,.20),transparent 60%),
+  radial-gradient(800px 600px at 50% 110%,rgba(251,191,36,.10),transparent 60%),var(--bg)}
+h1,h2,h3{font-family:'Sora',sans-serif;line-height:1.15}
+a{color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{letter-spacing:.28em;text-transform:uppercase;font-size:.72rem;font-weight:600;color:var(--pink)}
+section{padding:96px 0 8px}
+.section-head{margin-bottom:40px}
+.section-head h2{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:800;margin-top:10px}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(14px);background:rgba(8,8,15,.65);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Sora',sans-serif;font-weight:800;font-size:1.25rem;text-decoration:none}
+.logo span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:.92rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{border:1px solid var(--card-border);padding:8px 18px;border-radius:999px;color:var(--text)!important;background:var(--card)}
+.burger{display:none;background:none;border:0;color:var(--text);font-size:1.5rem;cursor:pointer}
+@media(max-width:760px){.nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:rgba(10,10,20,.97);padding:18px 24px;gap:16px}.nav-links.open{display:flex}.burger{display:block}}
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:150px 0 70px}
+.hero-grid{display:grid;grid-template-columns:1.25fr .85fr;gap:56px;align-items:center}
+@media(max-width:880px){.hero-grid{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(2.6rem,6vw,4.3rem);font-weight:800}
+.hero .role{font-size:clamp(1.15rem,2.6vw,1.6rem);color:var(--muted);margin-top:14px;min-height:2.2em}
+.hero .role b{color:var(--text);font-weight:600}
+.caret{display:inline-block;width:3px;height:1em;background:var(--fuchsia);vertical-align:-.12em;margin-left:3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hero p.lead{color:var(--muted);max-width:34rem;margin-top:8px}
+.btns{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.btn{text-decoration:none;font-weight:600;padding:13px 26px;border-radius:999px;font-size:.95rem;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--grad);color:#17102a;box-shadow:0 10px 30px rgba(217,70,239,.35)}
+.btn-ghost{border:1px solid var(--card-border);background:var(--card);color:var(--text)}
+.socials{display:flex;gap:12px;margin-top:28px}
+.socials a{width:42px;height:42px;border-radius:50%;border:1px solid var(--card-border);background:var(--card);display:grid;place-items:center;text-decoration:none;font-size:.8rem;font-weight:700;transition:transform .2s,border-color .2s}
+.socials a:hover{transform:translateY(-3px);border-color:var(--fuchsia)}
+.photo-card{position:relative;justify-self:center}
+.photo-card::before{content:"";position:absolute;inset:-14px;border-radius:32px;background:var(--grad);opacity:.55;filter:blur(28px);z-index:-1}
+.photo-card img{width:min(340px,80vw);aspect-ratio:4/5;object-fit:cover;border-radius:28px;border:1px solid rgba(255,255,255,.18);display:block}
+.chip{position:absolute;background:rgba(14,14,26,.88);border:1px solid var(--card-border);backdrop-filter:blur(8px);border-radius:14px;padding:10px 16px;font-size:.82rem;font-weight:600;box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.chip small{display:block;color:var(--muted);font-weight:500}
+.chip-a{top:26px;left:-38px}.chip-b{bottom:30px;right:-30px}
+@media(max-width:880px){.chip-a{left:2px}.chip-b{right:2px}}
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px}
+@media(max-width:880px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:22px;text-align:center}
+.stat .num{font-family:'Sora',sans-serif;font-size:1.9rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{color:var(--muted);font-size:.85rem;margin-top:4px}
+/* CARDS / SKILLS */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:760px){.grid-2{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:28px;transition:transform .25s,border-color .25s}
+.card:hover{transform:translateY(-4px);border-color:rgba(232,121,249,.45)}
+.card h3{font-size:1.08rem;margin-bottom:14px}
+.pills{display:flex;flex-wrap:wrap;gap:9px}
+.pill{font-size:.83rem;font-weight:500;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09)}
+.pill.hot{background:rgba(217,70,239,.14);border-color:rgba(217,70,239,.4)}
+.about p{color:var(--muted);margin-bottom:14px;max-width:62ch}
+.about strong{color:var(--text)}
+</style>
 
-  <title>Murrel Miranda | Full Stack / Backend Developer</title>
-  <meta content="Portfolio of Murrel Miranda — Full Stack / Backend Developer, MS in Information Systems at UT Arlington. React, Node.js, Python, SQL, MongoDB." name="description">
-  <meta content="" name="keywords">
-
-  <link href="https://img2.pngio.com/counselor-contact-information-br-png-250_150.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-  <link href="Background_Image_Fix.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css" rel="stylesheet">
-  <link href="aos.css" rel="stylesheet">
-  <link href="bootstrapcss" rel="stylesheet">
-  <link href="icons.css" rel="stylesheet">
-  <link href="min.css" rel="stylesheet">
-  <link href="glightbox.css" rel="stylesheet">
-  <link href="bundle.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+<style>
+/* EXPERIENCE TIMELINE */
+.timeline{position:relative;padding-left:34px}
+.timeline::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--violet),var(--fuchsia),var(--amber))}
+.t-item{position:relative;padding-bottom:34px}
+.t-item:last-child{padding-bottom:4px}
+.t-item::before{content:"";position:absolute;left:-32px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--fuchsia)}
+.t-item h3{font-size:1.15rem}
+.t-item .meta{color:var(--pink);font-size:.88rem;font-weight:600;margin:3px 0 8px}
+.t-item p,.t-item li{color:var(--muted)}
+.t-item ul{padding-left:18px}
+.t-item li{margin-bottom:5px}
+.t-item strong{color:var(--text)}
+/* PROJECTS */
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:980px){.proj-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.proj-grid{grid-template-columns:1fr}}
+.proj{overflow:hidden;padding:0;display:flex;flex-direction:column}
+.proj .thumb{height:170px;overflow:hidden;position:relative}
+.proj .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.proj:hover .thumb img{transform:scale(1.06)}
+.proj .thumb.grad{display:grid;place-items:center;font-family:'Sora',sans-serif;font-weight:800;font-size:1.5rem;color:#fff;text-align:center;padding:16px}
+.g1{background:linear-gradient(135deg,#4c1d95,#a21caf)}
+.g2{background:linear-gradient(135deg,#7c2d12,#db2777)}
+.proj .body{padding:22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.proj h3{font-size:1.05rem}
+.proj p{color:var(--muted);font-size:.92rem;flex:1}
+.proj .tags{display:flex;flex-wrap:wrap;gap:7px}
+.proj .tags span{font-size:.72rem;font-weight:600;letter-spacing:.02em;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--muted)}
+.proj .plink{font-weight:600;font-size:.9rem;text-decoration:none;color:var(--pink)}
+.proj .plink:hover{text-decoration:underline}
+.center-btn{text-align:center;margin-top:36px}
+/* EDUCATION */
+.edu-item h3{font-size:1.05rem}
+.edu-item .meta{color:var(--pink);font-weight:600;font-size:.88rem;margin:3px 0 6px}
+.edu-item p{color:var(--muted);font-size:.93rem}
+.list-clean{list-style:none}
+.list-clean li{color:var(--muted);padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.list-clean li:last-child{border-bottom:0}
+.list-clean strong{color:var(--text)}
+/* CTA + FOOTER */
+.cta{background:linear-gradient(120deg,rgba(124,58,237,.22),rgba(217,70,239,.16),rgba(251,191,36,.12));border:1px solid var(--card-border);border-radius:28px;padding:52px 34px;text-align:center;margin:96px auto 0}
+.cta h2{font-size:clamp(1.7rem,3.6vw,2.5rem);font-weight:800}
+.cta p{color:var(--muted);margin:12px auto 26px;max-width:44ch}
+footer{padding:44px 0 36px;color:var(--muted);font-size:.88rem;text-align:center}
+footer a{color:var(--pink);text-decoration:none}
+/* REVEAL ANIMATION */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+</style>
 </head>
-
-
 <body>
-  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
-  <header id="header">
-    <div class="d-flex flex-column">
 
-      <div class="profile">
-        <img src="Murrel_Image.jpg" alt="" class="img-fluid rounded-circle">
-        <h1 class="text-light py-2"><a href='/'>Murrel Miranda</a></h1>
-        <h2>Full Stack / Backend Developer</h2>
-        <div class="social-links mt-3 text-center">
-          <a href="https://www.linkedin.com/in/murrel-miranda/" target="_blank" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-          <a href="https://github.com/Murrel03" target="_blank" class="github"><i class="bx bxl-github"></i></a>
-          <a href="https://x.com/Murrel03" target="_blank" class="twitter"><i class="bx bxl-twitter"></i></a>
-          <a href="https://instagram.com/murrelmiranda03" target="_blank" class="instagram"><i class="bx bxl-instagram"></i></a>
-          <a href="https://www.facebook.com/" target="_blank" class="facebook"><i class="bx bxl-facebook"></i></a>
-        </div>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#top">Murrel<span>.</span></a>
+    <button class="burger" id="burger" aria-label="Open menu">&#9776;</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a class="nav-cta" href="Resume.pdf" target="_blank" rel="noopener">Resume &#8599;</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Hello, I'm</p>
+      <h1>Murrel <span class="grad-text">Miranda</span></h1>
+      <p class="role"><b id="typed"></b><span class="caret"></span></p>
+      <p class="lead">I build fast, secure web apps — React on the front, APIs and databases that actually perform underneath. My edge: years of deep SQL work on banking systems, now applied to full-stack development.</p>
+      <div class="btns">
+        <a class="btn btn-primary" href="#projects">View my work</a>
+        <a class="btn btn-ghost" href="https://github.com/Murrel03" target="_blank" rel="noopener">GitHub &#8599;</a>
       </div>
-
-      <nav id="navbar" class="nav-menu navbar">
-        <ul>
-          <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
-          <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
-          <li><a href="#skills" class="nav-link scrollto"><i class="bx bx-star"></i> <span>Skills</span></a></li>
-          <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
-          <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Projects</span></a></li>
-          <li><a href="#extracurricular" class="nav-link scrollto"><i class="bx bx-medal"></i> <span>Extra - Curricular</span></a></li>
-        </ul>
-      </nav>
+      <div class="socials">
+        <a href="https://www.linkedin.com/in/murrel-miranda/" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
+        <a href="https://github.com/Murrel03" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
+        <a href="https://x.com/Murrel03" target="_blank" rel="noopener" aria-label="X (Twitter)">X</a>
+        <a href="https://instagram.com/murrelmiranda03" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+        <a href="mailto:murrelmiranda12@gmail.com" aria-label="Email">@</a>
+      </div>
     </div>
-  </header>
+    <div class="photo-card">
+      <img src="Murrel_Image.jpg" alt="Portrait of Murrel Miranda">
+      <div class="chip chip-a">MS Information Systems<small>UT Arlington · Dec 2026</small></div>
+      <div class="chip chip-b">Full Stack Intern<small>Find Me LLC · 2025</small></div>
+    </div>
+  </div>
+</header>
 
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><div class="num">30%</div><div class="lbl">faster MongoDB data retrieval at Find Me LLC</div></div>
+    <div class="stat"><div class="num">35%</div><div class="lbl">SQL query response improvement at Wipro</div></div>
+    <div class="stat"><div class="num">99.99%</div><div class="lbl">uptime on Oracle RAC banking clusters</div></div>
+    <div class="stat"><div class="num">1,200+</div><div class="lbl">participants' data managed at Rustomjee</div></div>
+  </div>
+</div>
 
-  <section id="hero" class="d-flex flex-column justify-content-center align-items-center" style="width: 100%; height: 100vh; background: url('back.jpg') center center no-repeat; background-size: cover;">
-  <div class="hero-container" data-aos="fade-in">
-    <h1>Murrel Miranda</h1>
-    <p class="pa-3"><span class="typed" data-typed-items="Full Stack Developer, Backend Developer, MS in Information Systems @ UT Arlington"></span></p>
+<section id="about">
+  <div class="wrap about reveal">
+    <div class="section-head">
+      <p class="eyebrow">About</p>
+      <h2>Developer by direction, <span class="grad-text">database-deep</span> by training</h2>
+    </div>
+    <p>I'm a <strong>Full Stack / Backend Developer</strong> pursuing a Master's in Information Systems at the University of Texas at Arlington (graduating Dec 2026), with an earlier Master's in Big Data Analytics. I recently completed a Full Stack Developer Internship at <strong>Find Me LLC</strong>, building React interfaces, JWT authentication, and REST APIs.</p>
+    <p>Before that, I worked as an <strong>Oracle Database Administrator at Wipro Technologies in Mumbai</strong>, tuning SQL and automating with Python on mission-critical banking systems. That foundation is my superpower as a developer: I don't just make features work — I make the data layer fast, indexed, and reliable.</p>
+    <p>Born and brought up in Mumbai, currently in the US, and now looking for Software Developer, Full Stack, and Backend opportunities in Mumbai. Outside work, I spend my free time listening to music, dancing, and crafting — I share my art at <a href="https://www.instagram.com/whimsyinframes_/" target="_blank" rel="noopener">@whimsyinframes_</a>.</p>
   </div>
 </section>
 
 
-  <main id="main">
-
-    <!-- ABOUT  -->
-    <section id="about" class="about">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>About</h2>
-          <p>Hi! I'm <strong>Murrel Miranda</strong>, a Full Stack / Backend Developer pursuing a Master's in Information Systems at the University of Texas at Arlington (graduating Dec 2026). I recently completed a Full Stack Developer Internship at Find Me LLC, and before that I worked as an Oracle Database Administrator at Wipro Technologies in Mumbai, India. I also hold a Master's in Big Data Analytics.</p>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-4" data-aos="fade-right">
-            <img src="BGM.jpg" class="img-fluid" alt="">
-          </div>
-          <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-<!--             <h3>Mobile Application &amp; Full Stack Developer.</h3> -->
-            <p class="fst-italic">
-              At <strong>Find Me LLC</strong> I built React + Tailwind interfaces, JWT authentication, and REST APIs — and at <strong>Wipro Technologies</strong> I honed deep SQL and database performance skills on critical banking applications. 
-            </p>
-            <div class="row">
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>Dallas, Texas</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span><a href="mailto: murrelmiranda12@gmail.com" target="_blank"
-                    rel="noopener noreferrer">murrelmiranda12@gmail.com</a></span></li>
-                </ul>
-              </div>
-<!--               <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Masters in Information Systems</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Masters in Big Data Analytics</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Major:</strong> <span>Bachelors in Computer Science</span></li>
-                  
-                </ul>
-              </div> -->
-            </div>
-            <p>
-              I love designing but I like going outside my comfort zone to learn and work on new things, to try getting a hands on experience in them. My interests lie in designing and developing applications using the frameworks trending and evolving.
-              <ul>Additionally, I've also worked on projects related to domains like Image Processing, Machine Learning and Data Analysis. I like to leverage my skills by solving challenging problems and creating responsive applications.</ul>
-              
-               I'm currently located in the Dallas, TX, born and bought up in Mumbai, India. 
-              <ul>Diligent, hard-working, creative and result-oriented woman. I look forward to researching, learning and applying on my upcoming ventures.</ul>
-            </p>
-          </div>
-        </div>
-
+<section id="skills">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <p class="eyebrow">Skills</p>
+      <h2>What I <span class="grad-text">build with</span></h2>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Frontend</h3>
+        <div class="pills"><span class="pill hot">React</span><span class="pill hot">JavaScript</span><span class="pill">Tailwind CSS</span><span class="pill">HTML5</span><span class="pill">CSS3</span><span class="pill">Bootstrap</span></div>
       </div>
-    </section>
-
-    
-    <!-- SKILLS -->
-    <section id="skills" class="skills section-bg">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Skills</h2>
-        </div>
-
-        <center><div class="row pa-3 ">
-          <div class="col-sm ">
-            <img style="height: 90px; width:90px"  src="sql.png">
-              <p>SQL</p>
-          </div>
-          <div class="col-sm ">
-            <img style="height: 90px; width:90px"  src="ml.png">
-              <p>ML</p>
-          </div>
-          <div class="col-sm ">
-            <img style="height: 90px; width:90px"  src="python.png">
-              <p>Python</p>
-          </div>
-          <div class="col-sm">
-            <img style="height: 90px; width:90px"  src="javascript.png">
-              <p>JavaScript</p>
-          </div>
-          <div class="col-sm">
-            <img style="height: 90px; width:90px"  src="bootstrap.png">
-              <p>Bootstrap</p>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-sm">
-            <img style="height: 90px; width:90px"  src="react.png">
-              <p>React</p>
-          </div>
-          <div class="col-sm">
-            <img style="height: 90px; width:120px"  src="oci.png">
-              <p>OCI</p>
-          </div>
-          <div class="col-sm ">
-            <img style="height: 90px; width:90px"  src="github.png">
-              <p>Github</p>
-          </div>
-        </div></center>
+      <div class="card">
+        <h3>Backend</h3>
+        <div class="pills"><span class="pill hot">Node.js</span><span class="pill hot">Express.js</span><span class="pill hot">Python</span><span class="pill">REST APIs</span><span class="pill">JWT Authentication</span></div>
       </div>
-    </section>
-
-    <!-- RESUME -->
-    <section id="resume" class="resume">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Resume</h2>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-6" data-aos="fade-up">
-            <h3 class="resume-title">Summary</h3>
-            <div class="resume-item pb-0">
-              <h4>Murrel Miranda</h4>
-              <p><em>Full Stack / Backend Developer with experience building React front ends, Node.js/Express back ends, REST APIs, and JWT authentication, backed by strong SQL and database performance work on banking systems in Mumbai. Improved MongoDB data retrieval time by 30% at Find Me LLC and SQL query response time by 35% at Wipro. Known for being hardworking, a team player, and an open-minded individual.</em></p>
-              <ul>
-                <u><a href="Resume.pdf" target="_blank">
-                  <button style="background: #ff9800; border: 2px solid black;
-                    background-color: white;
-                    color: black;
-                    padding: 10px 28px;
-                    font-size: 16px;
-                    border-radius: 20px;
-                    cursor: pointer;">Resume</button>
-                  </a>
-                </u>
-<!--                 <li><a href="Resume.pdf" target="_blank"><h4>Resume</h4></a></li> -->
-              </ul>
-            </div> <br>
-
-            <h3 class="resume-title">Education</h3>
-            <div class="resume-item">
-              <h4>Master of Science (M.S) - Information Systems</h4>
-<!--               <h5>2024 - Present</h5> -->
-              <h5>2024 - Present</h5>&nbsp;&nbsp;<h5>GPA: 3.6/4</h5>
-              <p><a href="https://www.uta.edu/" target="_blank">University of Texas at Arlington, Texas, USA</a></p>
-            </div>
-            <div class="resume-item">
-              <h4>Master of Science (M.S) - Big Data Analytics</h4>
-<!--               <h5>2021 - 2023</h5> -->
-              <h5>2021 - 2023</h5>&nbsp;&nbsp;<h5>CGPA: 8.17/10</h5>
-              <p><a href="https://www.sju.edu.in/" target="_blank">St. Joseph University, Bangalore, India</a></p>
-            </div>
-            
-            <div class="resume-item">
-              <h4>Bachelor of Science - Computer Science</h4>
-<!--               <h5>2018 - 2021</h5> -->
-              <h5>2018 - 2021</h5>&nbsp;&nbsp;<h5>Percentage: 3.8/4</h5>
-              <p><a href="https://mu.ac.in/" target="_blank">University of Mumbai, MH, India</a></p>
-            </div>
-            
-            <h3 class="resume-title">Certifications</h3>
-            <div class="resume-item">
-              <h4>Oracle Infrastructure Foundation Certification</h4>
-              <h5>October 2024</h5>&nbsp;&nbsp;<a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=DAB70FA6AD6851A964C5B952C420F3909F479C318078265595A00D6A77014B27#" target="_blank"><button class="certification-btn">Certification Link</button></a>
-              <p><a href="https://education.oracle.com/oracle-cloud-infrastructure-2024-ai-foundations-associate/pexam_1Z0-1122-24#:~:text=The%20Oracle%20Cloud%20Infrastructure%20%28OCI%29%20AI%20Foundations%20certification,of%20these%20technologies%20within%20the%20Oracle%20Cloud%20Infrastructure." target="_blank">Oracle Cloud Infrastructure 2024 Certified Foundations Associate</a></p>
-            </div>
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="resume-title">Experience</h3>
-            <div class="resume-item">
-              <h4>Full Stack Developer Intern</h4>
-              <h5>June 2025 - August 2025</h5>
-              <p>Find Me LLC | North Carolina, USA </p>
-              <ul>
-                <li>Built reusable React components styled with Tailwind CSS and designed personalized portfolio creation flows with guided steps and real-time previews.</li>
-                <li>Engineered secure user authentication with JWT-based session management and integrated REST APIs for data persistence.</li>
-                <li>Optimized MongoDB queries and implemented compound indexing across high-traffic collections, cutting data retrieval time by 30%.</li>
-              </ul>
-            </div>
-            <div class="resume-item">
-              <h4>Oracle Database Administrator</h4>
-              <h5>January 2023 - July 2024</h5>
-              <p><a href="https://www.wipro.com/" target="_blank">Wipro Technologies Private Limited</a> | Mumbai, India </p>
-              <ul>
-                <li>Improved average SQL query response time by 35% on high-transaction OLTP banking systems through performance analysis, index rebuilding, and query tuning.</li>
-                <li>Built Python automation and administered mission-critical banking databases, sustaining 99.99% uptime across Oracle 19c RAC clusters supporting 5 banking applications.</li>
-              </ul>
-            </div>
-            <div class="resume-item">
-              <h4>Oracle Database Administrator Intern</h4>
-              <h5>February 2022 - June 2022</h5>&nbsp<h5>January 2023 - February 2023</h5>
-              <p><a href="https://www.wipro.com/" target="_blank">Wipro Technologies Private Limited</a> | Mumbai, India </p>
-              <ul>
-                <li>Participated in monitoring database performance and optimizing SQL queries for enhanced efficiency. Supported database migration projects, ensuring seamless transition and minimal downtime.</li>
-                <li>Participated in regular database health checks and performance tuning activities. Engaged in learning sessions and workshops to enhance skills in Oracle database administration.</li>
-              </ul>
-            </div>
-            <div class="resume-item">
-              <h4>Database &amp; Technology Associate</h4>
-              <h5>April 2021 - June 2021</h5>
-              <p><a href="https://ragc.in/" target="_blank">Rustomjee Academy For Global Careers,</a> | Mumbai, India</p>
-              <ul>
-                <li>Modeled and administered MySQL databases for 1,200+ program participants, with indexing that reduced query load time by 45%.</li>
-                <li>Built an optimized SQL reporting pipeline delivering 15+ weekly operational dashboards, and assisted in deploying a cloud-hosted AWS RDS MySQL solution.</li>
-              </ul>
-            </div>
-          </div>
-          </div>
-        </div>
-
+      <div class="card">
+        <h3>Databases</h3>
+        <div class="pills"><span class="pill hot">SQL</span><span class="pill hot">MongoDB</span><span class="pill">MySQL</span><span class="pill">Oracle 19c</span><span class="pill">Index &amp; Query Optimization</span><span class="pill">PL/SQL</span></div>
       </div>
-    </section>
-
-    <!-- PROJECT -->
-    <section id="portfolio" class="portfolio section-bg">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Projects</h2>
-        </div>
-
-        <div class="row" data-aos="fade-up">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-app">Apps</li>
-              <li data-filter=".filter-web">Web Apps</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="Ukraine-Russia.png" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="Ukraine-Russia.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Sentiment Analysis on Ukraine-Russia using R"><i class="bx bx-plus"></i></a>
-                <a href="https://github.com/Murrel03/Sentiment-Analysis-on-Ukraine-Russia-Using-R" target="_blank" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="Doggo.png" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="Doggo.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Predicting Dogs Emotions Using Machine Learning Algorithms"><i class="bx bx-plus"></i></a>
-                <a href="https://github.com/Murrel03/Predicting-Dog-Emotions-Using-Machine-Learning" target="_blank" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="StockMarket.png" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="StockMarket.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Stock Market Analysis using Time Series"><i class="bx bx-plus"></i></a>
-                <a href="https://github.com/Murrel03/Stock-Market-Analysis-Using-Time-Series" target="_blank" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="Fashion.png" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="Fashion.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Image Classification Data Fashion MNIST"><i class="bx bx-plus"></i></a>
-                <a href="https://github.com/Murrel03/Image-Classification-Data-Fashion-MNIST-" target="_blank" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="Bottleneck.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="Bottleneck.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Bottleneck BFF: AI-Driven SQL Optimization & Real-Time Cloud Intelligence"><i class="bx bx-plus"></i></a>
-                <a href="https://github.com/Murrel03/Bottleneck-BFF" target="_blank" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <center><u><a href="https://github.com/Murrel03?tab=repositories" target="_blank">
-          <button style="background: #ff9800; border: 2px solid black;
-            background-color: white;
-            color: black;
-            padding: 10px 28px;
-            font-size: 16px;
-            border-radius: 20px;
-            cursor: pointer;"><i class="bx bxl-github"></i>&nbsp;&nbsp;Click to explore more</button>
-          </a></u></center>
-
-      </div>
-    </section>
-
-    <!-- EXTRA-CURRICULAR -->
-    <section id="extracurricular" class="extracurricular">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Extra-Curricular</h2>
-        </div>
-
-        <div class="row">
-          <div class="col pt-2 pt-lg-0 content" data-aos="fade-left">
-            <strong><h4 style="font-weight: 800;">Positions of Responsibility</h4></strong>
-            <div class="row">
-              <div class="col-lg-6">
-                <ul>
-                  <li><span>Event Coordinator - <a href="https://www.sju.edu.in/" target="_blank">Annual Cultural Fest-</a>: St. Joseph University (2021 - 2022)</span></li>
-                  <li><span><a href="https://www.sju.edu.in/hackathon" target="_blank">Team Leader - College Hackathon</a>: St. Joseph University</span></li>
-                  <li><span>Volunteer - <a href="https://nss.gov.in/" target="_blank">National Service Scheme (2019-2021)</a>, India</span></li>
-                  <li><span>Member - <a href="https://www.sju.edu.in/placements/placement-process" target="_blank">Student Placement Committee (2022)</a> (2019 - 2020)</span></li>
-                </ul>
-              </div>
-            </div>
-
-            <strong><h4 style="font-weight: 800;">Other Activities</h4></strong>
-            <div class="row">
-              <div class="col-lg-10">
-                <ul>
-                  <li><span>Volunteered in an outreach program organized at college for underprivileged children, providing support in educational activities and helping to foster a love for learning.</span></li>
-                  <li><span>Participated in Antarchakshu Workshop for visually impaired.</span></li>
-                  <li><span>Organized events for National Service Scheme (NSS) such as Beach Clean-up Drives, Blood Donation Drive, Safety Drives, etc. during undergraduate</span></li>
-		  <li><span>Volunteered in DATAGRAM, organized by the Department of Big Data Analytics of St. Joseph's University on 5th and 6th May 2022
-		  </span></li>
-                </ul>
-              </div>
-            </div>
-
-            <strong><h4 style="font-weight: 800;">Interests</h4></strong>
-            <div class="row">
-              <div class="col-lg-10">
-                <ul>
-                  <li><span>I spend my free time listening to music and dancing.</span></li>
-		  <li><span>I like to embrace creativity by engaging in hands-on projects, where I can craft unique items and personalize them in ways that reflect my individual style and imagination.</span></li>
-                  <li>
-  		   <span>
-    			On my Instagram page, 
-    			<a href="https://www.instagram.com/whimsyinframes_/" target="_blank">@whimsyinframes_</a> I curate a tapestry of artistic 				expression, weaving together elements of color, form, and whimsy to evoke inspiration and offer a glimpse into my world of 				imaginative storytelling.
-  		   </span>
-	 	  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <section id="portfolio" class="portfolio">
-          <div class="container">
-    
-            <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
-    
-              <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                <div class="portfolio-wrap">
-                  <img src="Coffee.jpg" class="img-fluid" alt="">
-                  <div class="portfolio-links">
-                    <a href="Coffee.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox"><i class="bx bx-plus"></i></a>
-                    <a href="https://www.instagram.com/p/DBmj_QzRoHB/" target="_blank" title="More Details"><i class="bx bx-link"></i></a>
-                  </div>
-                </div>
-              </div>
-    
-              <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                <div class="portfolio-wrap">
-                  <img src="Tom.jpg" class="img-fluid" alt="">
-                  <div class="portfolio-links">
-                    <a href="Tom.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox"><i class="bx bx-plus"></i></a>
-                    <a href="https://www.instagram.com/p/DBmkHkxxkzw/" title="More Details"><i class="bx bx-link"></i></a>
-                  </div>
-                </div>
-              </div>
-    
-              <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-                <div class="portfolio-wrap">
-                  <img src="Bird.jpg" class="img-fluid" alt="">
-                  <div class="portfolio-links">
-                    <a href="Bird.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox"><i class="bx bx-plus"></i></a>
-                    <a href="https://www.instagram.com/p/DBmkMNex5g8/" title="More Details"><i class="bx bx-link"></i></a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-                <div class="portfolio-wrap">
-                  <img src="Mickey.jpg" class="img-fluid" alt="">
-                  <div class="portfolio-links">
-                    <a href="Mickey.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox"><i class="bx bx-plus"></i></a>
-                    <a href="https://www.instagram.com/p/DBmqHafxRPK/" title="More Details"><i class="bx bx-link"></i></a>
-                  </div>
-                </div>
-              </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-                <div class="portfolio-wrap">
-                  <img src="Jerry.jpg" class="img-fluid" alt="">
-                  <div class="portfolio-links">
-                    <a href="Jerry.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox"><i class="bx bx-plus"></i></a>
-                    <a href="https://www.instagram.com/p/DD0B358xxW4/" title="More Details"><i class="bx bx-link"></i></a>
-                  </div>
-                </div>
-              </div>
-
-
-    
-            </div>
-            <br>
-            <center><u><a href="https://www.instagram.com/whimsyinframes_/" target="_blank">
-              <button style="background: #ff9800; border: 2px solid black;
-                background-color: white;
-                color: black;
-                padding: 10px 28px;
-                font-size: 16px;
-                border-radius: 20px;
-                cursor: pointer;"><i class="bx bxl-instagram"></i>&nbsp;&nbsp;Click to explore more</button>
-              </a></u></center>
-          </div>
-        </section>
-
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer id="footer">
-    <div class="container">
-      <div class="copyright">
-        Made by <strong><a href="https://www.linkedin.com/in/murrel-miranda" target="_blank">Murrel</a></strong>
+      <div class="card">
+        <h3>Cloud &amp; Tools</h3>
+        <div class="pills"><span class="pill">AWS RDS</span><span class="pill">Microsoft Azure</span><span class="pill">Oracle Cloud (OCI)</span><span class="pill">Docker</span><span class="pill">Git &amp; GitHub</span><span class="pill">Linux</span></div>
       </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<section id="experience">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <p class="eyebrow">Experience</p>
+      <h2>Where I've <span class="grad-text">worked</span></h2>
+    </div>
+    <div class="timeline">
+      <div class="t-item">
+        <h3>Full Stack Developer Intern — Find Me LLC</h3>
+        <p class="meta">Jun 2025 – Aug 2025 · North Carolina, USA</p>
+        <ul>
+          <li>Built a library of reusable <strong>React components with Tailwind CSS</strong> and personalized portfolio flows with real-time previews.</li>
+          <li>Engineered <strong>JWT-based authentication</strong> and integrated REST APIs, hardening the platform against token leakage and injection attacks.</li>
+          <li>Optimized MongoDB queries with compound indexing, cutting data retrieval time by <strong>30%</strong>.</li>
+          <li>Shipped production features in Agile sprints with CI/CD and peer reviews — <strong>zero critical bugs</strong> at release.</li>
+        </ul>
+      </div>
+      <div class="t-item">
+        <h3>Oracle Database Administrator — Wipro Technologies</h3>
+        <p class="meta">Jan 2023 – Jul 2024 · Mumbai, India</p>
+        <ul>
+          <li>Improved average SQL query response time by <strong>35%</strong> on high-transaction OLTP banking systems.</li>
+          <li>Built <strong>Python automation</strong> and sustained <strong>99.99% uptime</strong> across Oracle 19c RAC clusters supporting 5 banking applications.</li>
+          <li>Led Oracle Exadata migration for 3 legacy systems with zero unplanned downtime.</li>
+        </ul>
+      </div>
+      <div class="t-item">
+        <h3>Database &amp; Technology Associate — Rustomjee Academy</h3>
+        <p class="meta">Apr 2021 – Jun 2021 · Mumbai, India</p>
+        <ul>
+          <li>Administered MySQL databases for <strong>1,200+ participants</strong>; indexing cut query load time by <strong>45%</strong>.</li>
+          <li>Built a SQL reporting pipeline delivering 15+ weekly dashboards, and helped deploy AWS RDS MySQL with zero data loss.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <script src="purecounter.js"></script>
-  <script src="aos.js"></script>
-  <script src="bundle.js"></script>
-  <script src="glightbox.js"></script>
-  <script src="layout.js"></script>
-  <script src="swiper.js"></script>
-  <script src="typed.js"></script>
-  <script src="waypoints.js"></script>
-  <script src="validate.js"></script>
-  <script src="main.js"></script>
+<section id="projects">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <p class="eyebrow">Projects</p>
+      <h2>Things I've <span class="grad-text">built</span></h2>
+    </div>
+    <!-- Project photos: Bottleneck/Dog/Fashion/Stock images are Murrel's own from this repo. AI-CRM photo: Pexels 5234499, Kanban photo: Pexels 7439127 (free to use under the Pexels license). -->
+    <div class="proj-grid">
+      <article class="card proj">
+        <div class="thumb"><img src="https://images.pexels.com/photos/5234499/pexels-photo-5234499.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Healthcare professional using a tablet" loading="lazy"></div>
+        <div class="body">
+          <h3>AI-First CRM — HCP Module</h3>
+          <p>A CRM screen where the rep never types into the form — a LangGraph AI agent extracts structured data from natural-language chat and fills it automatically, corrections included.</p>
+          <div class="tags"><span>React</span><span>Redux Toolkit</span><span>FastAPI</span><span>LangGraph</span><span>Groq LLM</span></div>
+          <a class="plink" href="https://github.com/Murrel03/AI-CRM---HCP-Module" target="_blank" rel="noopener">View on GitHub &#8599;</a>
+        </div>
+      </article>
+      <article class="card proj">
+        <div class="thumb"><img src="Bottleneck.jpg" alt="Bottleneck BFF project artwork"></div>
+        <div class="body">
+          <h3>Bottleneck BFF</h3>
+          <p>ML-powered SQL optimization dashboard that predicts query bottlenecks and scores your SQL — with rewrite and index suggestions.</p>
+          <div class="tags"><span>Python</span><span>Streamlit</span><span>Scikit-learn</span><span>SQL</span></div>
+          <a class="plink" href="https://github.com/Murrel03/Bottleneck-BFF" target="_blank" rel="noopener">View on GitHub &#8599;</a>
+        </div>
+      </article>
+      <article class="card proj">
+        <div class="thumb"><img src="https://images.pexels.com/photos/7439127/pexels-photo-7439127.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="A Kanban task board open on a laptop" loading="lazy"></div>
+        <div class="body">
+          <h3>Bubble Board — Kanban</h3>
+          <p>Feature-rich, themeable Kanban board with drag-and-drop, smart search and filters, subtasks, templates, undo/redo, and full mobile support.</p>
+          <div class="tags"><span>JavaScript</span><span>HTML</span><span>CSS</span></div>
+          <a class="plink" href="https://github.com/Murrel03/Bubble-Board---Advanced-Kanban-Task-Management" target="_blank" rel="noopener">View on GitHub &#8599;</a>
+        </div>
+      </article>
+      <article class="card proj">
+        <div class="thumb"><img src="Doggo.png" alt="Dog emotion prediction project artwork"></div>
+        <div class="body">
+          <h3>Predicting Dog Emotions</h3>
+          <p>Machine-learning image recognition that reads emotions from dogs' muzzles — because nobody had built a good model for that yet.</p>
+          <div class="tags"><span>Python</span><span>Machine Learning</span><span>Jupyter</span></div>
+          <a class="plink" href="https://github.com/Murrel03/Predicting-Dog-Emotions-Using-Machine-Learning" target="_blank" rel="noopener">View on GitHub &#8599;</a>
+        </div>
+      </article>
+      <article class="card proj">
+        <div class="thumb"><img src="Fashion.png" alt="Fashion MNIST classification project artwork"></div>
+        <div class="body">
+          <h3>Image Classification — Fashion MNIST</h3>
+          <p>Deep-learning image classification on the Fashion MNIST dataset, distinguishing clothing categories from grayscale images.</p>
+          <div class="tags"><span>Python</span><span>Deep Learning</span><span>Jupyter</span></div>
+          <a class="plink" href="https://github.com/Murrel03/Image-Classification-Data-Fashion-MNIST-" target="_blank" rel="noopener">View on GitHub &#8599;</a>
+        </div>
+      </article>
+      <article class="card proj">
+        <div class="thumb"><img src="StockMarket.png" alt="Stock market analysis project artwork"></div>
+        <div class="body">
+          <h3>Stock Market Analysis</h3>
+          <p>Time-series analysis of stock market data in R — trends, seasonality, and forecasting patterns.</p>
+          <div class="tags"><span>R</span><span>Time Series</span><span>Data Analysis</span></div>
+          <a class="plink" href="https://github.com/Murrel03/Stock-Market-Analysis-Using-Time-Series" target="_blank" rel="noopener">View on GitHub &#8599;</a>
+        </div>
+      </article>
+    </div>
+    <div class="center-btn">
+      <a class="btn btn-ghost" href="https://github.com/Murrel03?tab=repositories" target="_blank" rel="noopener">Explore all projects on GitHub &#8599;</a>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <p class="eyebrow">Education &amp; More</p>
+      <h2>Background</h2>
+    </div>
+    <div class="grid-2">
+      <div class="card edu-item">
+        <h3>MS — Information Systems</h3>
+        <p class="meta">2024 – Dec 2026 · GPA 3.6/4</p>
+        <p>University of Texas at Arlington, Texas, USA — Database Management Systems, Cloud Computing, Data Engineering, IT Security.</p>
+      </div>
+      <div class="card edu-item">
+        <h3>Master — Big Data Analytics</h3>
+        <p class="meta">2021 – 2022 · CGPA 8.17/10</p>
+        <p>St. Joseph University, Bengaluru, India. Earlier: BSc Computer Science, University of Mumbai (2018 – 2021).</p>
+      </div>
+      <div class="card">
+        <h3>Certifications</h3>
+        <ul class="list-clean">
+          <li><strong>Oracle Cloud Infrastructure 2024</strong> — AI Foundations Associate</li>
+          <li><strong>Microsoft Azure</strong> — DP-300 (database)</li>
+          <li><strong>AWS &amp; Oracle</strong> certified foundations</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Leadership &amp; Involvement</h3>
+        <ul class="list-clean">
+          <li><strong>Team Leader</strong> — College Hackathon, St. Joseph University</li>
+          <li><strong>Event Coordinator</strong> — Annual Cultural Fest (2021–22)</li>
+          <li><strong>Volunteer</strong> — National Service Scheme, India (2019–21)</li>
+          <li><strong>Member</strong> — Student Placement Committee (2022)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="cta">
+      <h2>Let's build something <span class="grad-text">great</span></h2>
+      <p>I'm looking for Software Developer, Full Stack, and Backend roles in Mumbai. My inbox is open — say hello.</p>
+      <div class="btns" style="justify-content:center">
+        <a class="btn btn-primary" href="mailto:murrelmiranda12@gmail.com">Email me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/murrel-miranda/" target="_blank" rel="noopener">Connect on LinkedIn &#8599;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Designed &amp; built by <a href="https://www.linkedin.com/in/murrel-miranda" target="_blank" rel="noopener">Murrel Miranda</a> · <span id="year"></span></p>
+  </div>
+</footer>
+
+<script>
+// Mobile menu
+document.getElementById('burger').addEventListener('click', function(){
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('#navLinks a').forEach(function(a){
+  a.addEventListener('click', function(){ document.getElementById('navLinks').classList.remove('open'); });
+});
+// Typed role rotator
+var roles = ['Full Stack Developer','Backend Developer','React + Python + SQL','MS Information Systems @ UT Arlington'];
+var typedEl = document.getElementById('typed');
+var ri = 0, ci = 0, deleting = false;
+function tick(){
+  var word = roles[ri];
+  typedEl.textContent = word.slice(0, ci);
+  if(!deleting){
+    if(ci < word.length){ ci++; setTimeout(tick, 65); }
+    else { deleting = true; setTimeout(tick, 1700); }
+  } else {
+    if(ci > 0){ ci--; setTimeout(tick, 32); }
+    else { deleting = false; ri = (ri + 1) % roles.length; setTimeout(tick, 350); }
+  }
+}
+tick();
+// Reveal on scroll
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+// Auto year
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 
 </body>
-
 </html>
